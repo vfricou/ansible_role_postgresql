@@ -1,0 +1,15 @@
+---
+- name: 'Import validator'
+  ansible.builtin.import_tasks: validator/main.yml
+  tags:
+    - always
+
+- name: 'Import preconfigure tasks'
+  ansible.builtin.import_tasks: preconfigure/main.yml
+  tags:
+    - always
+
+- name: 'Import backup tasks'
+  ansible.builtin.import_tasks: backup/main.yml
+  tags:
+    - backup

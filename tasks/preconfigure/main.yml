@@ -1,0 +1,7 @@
+---
+- name: 'Preconfigure | Install required packages'
+  ansible.builtin.package:
+    state: 'present'
+    name: '{{ item }}'
+  loop:
+    - python3-psycopg2
