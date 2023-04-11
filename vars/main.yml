@@ -1,0 +1,15 @@
+---
+# Supported OS definition
+supported_platforms:
+  - name: Rocky
+    versions:
+      - 8
+      - 9
+  - name: AlmaLinux
+    versions:
+      - 8
+      - 9
+  - name: RedHat
+    versions:
+      - 8
+      - 9

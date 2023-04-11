@@ -1,0 +1,66 @@
+---
+- name: 'Backup | Ensure target folders exists'
+  ansible.builtin.file:
+    path: "{{ item.value.path }}"
+    owner: "{{ item.value.owner }}"
+    group: "{{ item.value.group }}"
+    mode: "{{ item.value.mode }}"
+    state: directory
+  loop: "{{ folders | dict2items }}"
+  vars:
+    folders:
+      base:
+        path: "{{ bkp_base_path }}"
+        owner: 'root'
+        group: 'root'
+        mode: '0751'
+      dump:
+        path: "{{ bkp_dump_target_dir }}"
+        owner: "{{ postgres_user }}"
+        group: "{{ postgres_group }}"
+        mode: '0700'
+      conf:
+        path: "{{ bkp_conf_target_dir }}"
+        owner: "{{ postgres_user }}"
+        group: "{{ postgres_group }}"
+        mode: '0700'
+
+- name: 'Backup | Perform backup'
+  become: true
+  become_user: '{{ postgres_user }}'
+  block:
+    - name: 'Backup | List databases'
+      community.postgresql.postgresql_info:
+        filter:
+          - databases
+      register: postgresql_dblist
+
+    - name: 'Backup | Dump databases'
+      become: true
+      become_user: '{{ postgres_user }}'
+      community.postgresql.postgresql_db:
+        name: "{{ item }}"
+        state: dump
+        target: "{{ bkp_dump_target_dir }}/{{ item }}.{{ ansible_date_time['weekday'] }}.sql"
+      loop: "{{ postgresql_dblist['databases'] | flatten(levels=1) }}"
+      when:
+        - item != 'template0'
+        - item != 'template1'
+
+    - name: 'Backup | list uncompressed dump files'
+      ansible.builtin.find:
+        paths: '{{ bkp_dump_target_dir }}'
+        patterns: '*.sql'
+      register: postgresql_dumplist
+
+    - name: "mariadb | backup | compress database dumps"
+      community.general.archive:
+        path: '{{ item.path }}'
+        format: gz
+        remove: yes
+        owner: '{{ postgres_user }}'
+        group: '{{ postgres_group }}'
+        mode: '0600'
+      with_items:
+        - '{{ postgresql_dumplist.files }}'
+
