@@ -1,0 +1,7 @@
+---
+- name: "Prerequisites | Debian | Install required packages"
+  become: true
+  become_user: 'root'
+  ansible.builtin.package:
+    state: present
+    name: "{{ packages.debian.requirements }}"

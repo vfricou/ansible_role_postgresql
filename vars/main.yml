@@ -17,9 +17,12 @@ supported_platforms:
 # Packages configurations
 packages:
   rhel:
-    - python3-psycopg2
+    requirements:
+      - python3-psycopg2
   debian:
-    - apt-transport-https
+    requirements:
+      - apt-transport-https
+      - python3-psycopg
 
 debian:
   repo_config: 'deb https://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main'

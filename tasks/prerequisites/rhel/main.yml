@@ -4,4 +4,4 @@
   become_user: "true"
   ansible.builtin.package:
     state: 'present'
-    name: '{{ packages.rhel }}'
+    name: '{{ packages.requirements.rhel }}'
