@@ -4,7 +4,7 @@
   become_user: 'root'
   ansible.builtin.apt_key:
     url: "{{ debian.repo_gpg_url }}"
-    keyring: "/etc/apt/trusted.gpg.d/pgdg.asc"
+    keyring: "/etc/apt/trusted.gpg.d/pgdg.gpg"
     state: present
 
 - name: "Install | Debian | Configure PGDG repository"
