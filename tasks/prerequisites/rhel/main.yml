@@ -1,0 +1,7 @@
+---
+- name: "Prerequisites | RHEL | Install required packages"
+  become: true
+  become_user: "true"
+  ansible.builtin.package:
+    state: 'present'
+    name: '{{ packages.rhel }}'

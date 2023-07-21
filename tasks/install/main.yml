@@ -1,0 +1,4 @@
+---
+- name: "Install | Import Debian tasks"
+  when: ansible_os_family == 'Debian'
+  ansible.builtin.import_tasks: install/debian/main.yml

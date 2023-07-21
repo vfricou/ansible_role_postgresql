@@ -1,0 +1,5 @@
+---
+- name: "Prerequisites | Import RHEL tasks"
+  when: ansible_os_family == 'RedHat'
+  ansible.builtin.import_tasks: preconfigure/rhel/main.yml
+

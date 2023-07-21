@@ -10,17 +10,17 @@
   vars:
     folders:
       base:
-        path: "{{ bkp_base_path }}"
+        path: "{{ pg_bkp_base_path }}"
         owner: 'root'
         group: 'root'
         mode: '0751'
       dump:
-        path: "{{ bkp_dump_target_dir }}"
+        path: "{{ pg_bkp_dump_target_dir }}"
         owner: "{{ postgres_user }}"
         group: "{{ postgres_group }}"
         mode: '0700'
       conf:
-        path: "{{ bkp_conf_target_dir }}"
+        path: "{{ pg_bkp_conf_target_dir }}"
         owner: "{{ postgres_user }}"
         group: "{{ postgres_group }}"
         mode: '0700'
@@ -41,7 +41,7 @@
       community.postgresql.postgresql_db:
         name: "{{ item }}"
         state: dump
-        target: "{{ bkp_dump_target_dir }}/{{ item }}.{{ ansible_date_time['weekday'] }}.sql"
+        target: "{{ pg_bkp_dump_target_dir }}/{{ item }}.{{ ansible_date_time['weekday'] }}.sql"
       loop: "{{ postgresql_dblist['databases'] | flatten(levels=1) }}"
       when:
         - item != 'template0'
@@ -49,7 +49,7 @@
 
     - name: 'Backup | list uncompressed dump files'
       ansible.builtin.find:
-        paths: '{{ bkp_dump_target_dir }}'
+        paths: '{{ pg_bkp_dump_target_dir }}'
         patterns: '*.sql'
       register: postgresql_dumplist
 

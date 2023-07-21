@@ -13,3 +13,14 @@ supported_platforms:
     versions:
       - 8
       - 9
+
+# Packages configurations
+packages:
+  rhel:
+    - python3-psycopg2
+  debian:
+    - apt-transport-https
+
+debian:
+  repo_config: 'deb https://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main'
+  repo_gpg_url: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
