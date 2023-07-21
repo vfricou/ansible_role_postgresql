@@ -1,4 +1,5 @@
 ---
+postgres_version: '15'
 postgres_user: 'postgres'
 postgres_group: 'postgres'
 pg_bkp_base_path: '/srv/exploit/backup/postgres'

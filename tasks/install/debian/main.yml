@@ -16,3 +16,12 @@
     mode: "0644"
     update_cache: true
     state: present
+
+- name: "Install | Debian | Ensure required packages are installed"
+  become: true
+  become_user: 'root'
+  ansible.builtin.apt:
+    state: present
+    name:
+      - postgresql-{{ postgres_version }}
+      - postgresql-client-{{ postgres_version }}
