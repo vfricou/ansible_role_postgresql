@@ -31,3 +31,9 @@ packages:
 debian:
   repo_config: 'deb https://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main'
   repo_gpg_url: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
+
+postgres:
+  user: 'postgres'
+  group: 'postgres'
+  debian:
+    conf_path: '/etc/postgresql'

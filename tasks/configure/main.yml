@@ -1,0 +1,4 @@
+---
+- name: "Configure | Import Debian configure tasks"
+  when: ansible_os_family == 'Debian'
+  ansible.builtin.import_tasks: configure/debian/main.yml

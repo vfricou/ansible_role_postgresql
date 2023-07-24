@@ -16,18 +16,18 @@
         mode: '0751'
       dump:
         path: "{{ pg_bkp_dump_target_dir }}"
-        owner: "{{ postgres_user }}"
-        group: "{{ postgres_group }}"
+        owner: "{{ postgres.user }}"
+        group: "{{ postgres.group }}"
         mode: '0700'
       conf:
         path: "{{ pg_bkp_conf_target_dir }}"
-        owner: "{{ postgres_user }}"
-        group: "{{ postgres_group }}"
+        owner: "{{ postgres.user }}"
+        group: "{{ postgres.group }}"
         mode: '0700'
 
 - name: 'Backup | Perform backup'
   become: true
-  become_user: '{{ postgres_user }}'
+  become_user: '{{ postgres.user }}'
   block:
     - name: 'Backup | List databases'
       community.postgresql.postgresql_info:
@@ -37,7 +37,7 @@
 
     - name: 'Backup | Dump databases'
       become: true
-      become_user: '{{ postgres_user }}'
+      become_user: '{{ postgres.user }}'
       community.postgresql.postgresql_db:
         name: "{{ item }}"
         state: dump
@@ -58,8 +58,8 @@
         path: '{{ item.path }}'
         format: gz
         remove: yes
-        owner: '{{ postgres_user }}'
-        group: '{{ postgres_group }}'
+        owner: '{{ postgres.user }}'
+        group: '{{ postgres.group }}'
         mode: '0600'
       with_items:
         - '{{ postgresql_dumplist.files }}'
