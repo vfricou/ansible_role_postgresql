@@ -1,8 +1,13 @@
 ---
 - name: "Configure | Debian | Deploy postgres configurations"
+  become: true
+  become_user: 'root'
+  tags:
+    - configure
   loop:
     - { filename: 'postgresql.conf', owner: '{{ postgres.user }}', group: '{{ postgres.group }}', mode: '0644' }
     - { filename: 'pg_hba.conf',     owner: '{{ postgres.user }}', group: '{{ postgres.group }}', mode: '0640' } # yaml[commas]
+  notify: 'Restart postgresql'
   ansible.builtin.template:
     src: "postgresql/{{ item.filename }}.j2"
     dest: "{{ postgres.debian.conf_path }}/{{ postgres_version }}/main/{{ item.filename }}"
