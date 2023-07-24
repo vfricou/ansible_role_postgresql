@@ -20,6 +20,8 @@ host    replication     all             127.0.0.1/32            scram-sha-256
 host    replication     all             ::1/128                 scram-sha-256
 
 # Custom entries
+{% if postgres_acl is defined %}
 {% for entries in postgres_acl %}
 {{ entries.type }} {{ entries.database }} {{ entries.user }} {{ entries.address }} {{ entries.method }}
 {% endfor %}
+{% endif %}
