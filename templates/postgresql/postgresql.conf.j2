@@ -232,13 +232,13 @@ recursive_worktable_factor = {{ postgres_recursive_worktable_factor | default('1
 #------------------------------------------------------------------------------
 # - Where to Log -
 log_destination = '{{ postgres_log_destination | default('stderr') }}'
-logging_collector = {{ postgres_logging_collectior | default('off') }}
+logging_collector = {{ postgres_logging_collector | default('off') }}
 log_directory = '{{ postgres_log_directory | default('log') }}'
 log_filename = '{{ postgres_log_filename | default('postgresql-%Y-%m-%d_%H%M%S.log') }}'
 log_file_mode = {{ postgres_log_file_mode | default('0600') }}
 log_rotation_age = {{ postgres_log_rotation_age | default('1d') }}
 log_rotation_size = {{ postgres_log_rotation_size | default('10MB') }}
-log_truncate_on_rotation = {{ postgres_log_truncute_on_rotation | default('off') }}
+log_truncate_on_rotation = {{ postgres_log_truncate_on_rotation | default('off') }}
 syslog_facility = '{{ postgres_syslog_facility | default('LOCAL0') }}'
 syslog_ident = '{{ postgres_syslog_ident | default('postgres') }}'
 syslog_sequence_numbers = {{ postgres_syslog_sequence_numbers | default('on') }}

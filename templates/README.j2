@@ -209,11 +209,25 @@ None.
 
 {% if role_meta_vars['galaxy_info']['license'] is defined %}
 
+{# requirements guide from md files #}
+  {% if role_docs_md_files is not none %}
+    {% for role_docs_md_file in role_docs_md_files %}
+      {% if 'REQUIREMENTS' in role_docs_md_file['filename'] %}
+{{role_docs_md_file['content']}}
+      {% endif %}
+      {% if loop.length > 1 %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
 {# usage guide // doc from md files #}
+## Additional documentations
   {% if role_docs_md_files is not none %}
     {% for role_docs_md_file in role_docs_md_files %}
       {% if 'README' not in role_docs_md_file['filename'] %}
+        {% if 'REQUIREMENTS' not in role_docs_md_file['filename'] %}
 {{role_docs_md_file['content']}}
+        {% endif %}
       {% endif %}
       {% if loop.length > 1 %}
       {% endif %}
