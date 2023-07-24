@@ -285,7 +285,7 @@ log_timezone = '{{ postgres_timezone | default('UTC') }}'
 #------------------------------------------------------------------------------
 # PROCESS TITLE
 #------------------------------------------------------------------------------
-cluster_name = '{{ postgres_cluster_name | default('{{ postgres_version }}/main') }}
+cluster_name = '{{ postgres_cluster_name | default('{{ postgres_version }}/main') }}'
 update_process_title = {{ postgres_update_process_title | default('on') }}
 
 #------------------------------------------------------------------------------
