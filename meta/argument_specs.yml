@@ -145,7 +145,7 @@ argument_specs:
         type: str
         required: false
         default: 'prime256v1'
-        descriptions: 'Specify ECDH curve used for curve TLS protocols'
+        description: 'Specify ECDH curve used for curve TLS protocols'
 
       postgres_ssl_min_vers:
         type: str
@@ -960,7 +960,7 @@ argument_specs:
       postgres_update_process_title:
         type: str
         required: false
-        defaults: 'on'
+        default: 'on'
         description: 'Match PostgreSQL `update_process_title` option'
 
 # Postgres Statistics
@@ -1460,4 +1460,3 @@ argument_specs:
         required: false
         default: 'fsync'
         description: 'Match PostgreSQL `recovery_init_sync_method` option'
-

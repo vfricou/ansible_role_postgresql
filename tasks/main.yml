@@ -7,6 +7,9 @@
 - name: 'Import install tasks'
   ansible.builtin.import_tasks: install/main.yml
 
+- name: 'Import configure tasks'
+  ansible.builtin.import_tasks: configure/main.yml
+
 - name: 'Import backup tasks'
   ansible.builtin.import_tasks: backup/main.yml
   tags:

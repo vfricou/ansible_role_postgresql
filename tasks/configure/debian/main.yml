@@ -6,7 +6,7 @@
     - configure
   loop:
     - { filename: 'postgresql.conf', owner: '{{ postgres.user }}', group: '{{ postgres.group }}', mode: '0644' }
-    - { filename: 'pg_hba.conf',     owner: '{{ postgres.user }}', group: '{{ postgres.group }}', mode: '0640' } # yaml[commas]
+    - { filename: 'pg_hba.conf',     owner: '{{ postgres.user }}', group: '{{ postgres.group }}', mode: '0640' } # noqa yaml[commas]
   notify: 'Restart postgresql'
   ansible.builtin.template:
     src: "postgresql/{{ item.filename }}.j2"

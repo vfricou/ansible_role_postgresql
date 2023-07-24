@@ -1,11 +1,5 @@
 ---
 - name: 'Backup | Ensure target folders exists'
-  ansible.builtin.file:
-    path: "{{ item.value.path }}"
-    owner: "{{ item.value.owner }}"
-    group: "{{ item.value.group }}"
-    mode: "{{ item.value.mode }}"
-    state: directory
   loop: "{{ folders | dict2items }}"
   vars:
     folders:
@@ -24,43 +18,48 @@
         owner: "{{ postgres.user }}"
         group: "{{ postgres.group }}"
         mode: '0700'
+  ansible.builtin.file:
+    path: "{{ item.value.path }}"
+    owner: "{{ item.value.owner }}"
+    group: "{{ item.value.group }}"
+    mode: "{{ item.value.mode }}"
+    state: directory
 
 - name: 'Backup | Perform backup'
   become: true
   become_user: '{{ postgres.user }}'
   block:
     - name: 'Backup | List databases'
+      register: postgresql_dblist
       community.postgresql.postgresql_info:
         filter:
           - databases
-      register: postgresql_dblist
 
     - name: 'Backup | Dump databases'
       become: true
       become_user: '{{ postgres.user }}'
-      community.postgresql.postgresql_db:
-        name: "{{ item }}"
-        state: dump
-        target: "{{ pg_bkp_dump_target_dir }}/{{ item }}.{{ ansible_date_time['weekday'] }}.sql"
       loop: "{{ postgresql_dblist['databases'] | flatten(levels=1) }}"
       when:
         - item != 'template0'
         - item != 'template1'
+      community.postgresql.postgresql_db:
+        name: "{{ item }}"
+        state: dump
+        target: "{{ pg_bkp_dump_target_dir }}/{{ item }}.{{ ansible_date_time['weekday'] }}.sql"
 
     - name: 'Backup | list uncompressed dump files'
+      register: postgresql_dumplist
       ansible.builtin.find:
         paths: '{{ pg_bkp_dump_target_dir }}'
         patterns: '*.sql'
-      register: postgresql_dumplist
 
-    - name: "mariadb | backup | compress database dumps"
+    - name: "Backup | Compress database dumps"
+      loop:
+        - '{{ postgresql_dumplist.files }}'
       community.general.archive:
         path: '{{ item.path }}'
         format: gz
-        remove: yes
+        remove: true
         owner: '{{ postgres.user }}'
         group: '{{ postgres.group }}'
         mode: '0600'
-      with_items:
-        - '{{ postgresql_dumplist.files }}'
-
