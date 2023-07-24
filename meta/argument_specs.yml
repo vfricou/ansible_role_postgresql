@@ -30,7 +30,7 @@ argument_specs:
         type: list
         required: false
         description: 'Engine ACL deployed in pg_hba.conf file (see #Variable postgres_acl examples)'
-        elements: list[dict]
+        elements: dict
         options:
           database:
             type: str
@@ -173,7 +173,7 @@ argument_specs:
         description: 'Match PostgreSQL `temp_buffers` option'
 
       postgres_max_prepared_transactions:
-        type: int
+        type: str
         required: false
         default: 0
         description: 'Match PostgreSQL `max_prepared_transactions` option'
@@ -227,38 +227,38 @@ argument_specs:
         description: 'Match PostgreSQL `min_dynamic_shared_memory` option'
 
       postgres_max_files_per_process:
-        type: int
+        type: str
         required: false
         default: 1000
         description: 'Match PostgreSQL `max_files_per_process` option'
 
 ## Postgres Cost based vacuum delay
       postgres_vacuum_cost_delay:
-        type: int
+        type: str
         required: false
         default: 0
         description: 'Match PostgreSQL `vacuum_cost_delay` option'
 
       postgres_vacuum_cost_page_hit:
-        type: int
+        type: str
         required: false
         default: 1
         description: 'Match PostgreSQL `vacuum_cost_page_hit` option'
 
       postgres_vacuum_cost_page_miss:
-        type: int
+        type: str
         required: false
         default: 2
         description: 'Match PostgreSQL `vacuum_cost_page_miss` option'
 
       postgres_vacuum_cost_page_dirty:
-        type: int
+        type: str
         required: false
         default: 20
         description: 'Match PostgreSQL `vacuum_cost_page_dirty` option'
 
       postgres_vacuum_cost_limit:
-        type: int
+        type: str
         required: false
         default: 200
         description: 'Match PostgreSQL `vacuum_cost_limit` option'
@@ -272,7 +272,7 @@ argument_specs:
         description: 'Match PostgreSQL `bgwriter_delay` option'
 
       postgres_bgwriter_lru_maxpages:
-        type: int
+        type: str
         required: false
         default: 100
         description: 'Match PostgreSQL `bgwriter_lru_maxpages` option'
@@ -291,43 +291,43 @@ argument_specs:
 
 ## Postgres Ansynchronous behavior
       postgres_backend_flush_after:
-        type: int
+        type: str
         required: false
         default: '0'
         description: 'Match PostgreSQL `backend_flush_after` option'
 
       postgres_effective_io_concurrency:
-        type: int
+        type: str
         required: false
         default: '1'
         description: 'Match PostgreSQL `effective_ip_concurrency` option'
 
       postgres_maintenance_io_concurrency:
-        type: int
+        type: str
         required: false
         default: '10'
         description: 'Match PostgreSQL `maintenance_ip_concurrency` option'
 
       postgres_max_worker_processes:
-        type: int
+        type: str
         required: false
         default: '8'
         description: 'Match PostgreSQL `max_worker_process` option'
 
       postgres_max_parallel_workers_per_gather:
-        type: int
+        type: str
         required: false
         default: '2'
         description: 'Match PostgreSQL `max parallel_workers_per_gather` option'
 
       postgres_max_parallel_maintenance_workers:
-        type: int
+        type: str
         required: false
         default: '2'
         description: 'Match PostgreSQL `max_parallel_maintenance_workers` option'
 
       postgres_max_parallel_workers:
-        type: int
+        type: str
         required: false
         default: '8'
         description: 'Match PostgreSQL `max_parallel_workers` option'
@@ -388,13 +388,13 @@ argument_specs:
         description: 'Match PostgreSQL `wal_skip_threshold` option'
 
       postgres_commit_delay:
-        type: int
+        type: str
         required: false
         default: '0'
         description: 'Match PostgreSQL `commit_delay` option'
 
       postgres_commit_siblings:
-        type: int
+        type: str
         required: false
         default: '5'
         description: 'Match PostgreSQL `commit_siblings` option'
@@ -407,7 +407,7 @@ argument_specs:
         description: 'Match PostgreSQL `checkpoint_timeout` option'
 
       postgres_checkpoint_completion_target:
-        type: int
+        type: str
         required: false
         default: '0.9'
         description: 'Match PostgreSQL `checkpoint_completion_target` option'
@@ -560,43 +560,43 @@ argument_specs:
 
 ## Postgres Planner cost constants
       postgres_seq_page_cost:
-        type: int
+        type: str
         required: false
         default: '1.0'
         description: 'Match PostgreSQL `seq_page_cost` option'
 
       postgres_random_page_cost:
-        type: int
+        type: str
         required: false
         default: '4.0'
         description: 'Match PostgreSQL `random_page_cost` option'
 
       postgres_cpu_tuple_cost:
-        type: int
+        type: str
         required: false
         default: '0.01'
         description: 'Match PostgreSQL `cpu_tuple_cost` option'
 
       postgres_cpu_index_tuple_cost:
-        type: int
+        type: str
         required: false
         default: '0.005'
         description: 'Match PostgreSQL `cpu_index_tuple_cost` option'
 
       postgres_cpu_operator_cost:
-        type: int
+        type: str
         required: false
         default: '0.0025'
         description: 'Match PostgreSQL `cpu_operator_cost` option'
 
       postgres_parallel_setup_cost:
-        type: int
+        type: str
         required: false
         default: '1000.0'
         description: 'Match PostgreSQL `parallel_setup_cost` option'
 
       postgres_parallel_tuple_cost:
-        type: int
+        type: str
         required: false
         default: '0.1'
         description: 'Match PostgreSQL `parallel_tuple_cost` option'
@@ -620,19 +620,19 @@ argument_specs:
         description: 'Match PostgreSQL `effective_cache_size` option'
 
       postgres_jit_above_cost:
-        type: int
+        type: str
         required: false
         default: '100000'
         description: 'Match PostgreSQL `jit_above_cost` option'
 
       postgres_jit_inline_above_cost:
-        type: int
+        type: str
         required: false
         default: '500000'
         description: 'Match PostgreSQL `jit_inline_above_cost` option'
 
       postgres_jit_optimize_above_cost:
-        type: int
+        type: str
         required: false
         default: '500000'
         description: 'Match PostgreSQL `jit_optimize_above_cost` option'
@@ -644,44 +644,44 @@ argument_specs:
         default: 'on'
         description: 'Match PostgreSQL `geqo` option'
       postgres_geqo_threshold:
-        type: int
+        type: str
         required: false
         default: '12'
         description: 'Match PostgreSQL `geqo_threshold` option'
 
       postgres_geqo_effort:
-        type: int
+        type: str
         required: false
         default: '5'
         description: 'Match PostgreSQL `geqo_effort` option'
 
       postgres_geqo_pool_size:
-        type: int
+        type: str
         required: false
         default: '0'
         description: 'Match PostgreSQL `geqo_pool_size` option'
 
       postgres_geqo_generations:
-        type: int
+        type: str
         required: false
         default: '0'
         description: 'Match PostgreSQL `geqo_generations` option'
 
       postgres_geqo_selection_bias:
-        type: int
+        type: str
         required: false
         default: '2.0'
         description: 'Match PostgreSQL `geqo_selection_bias` option'
 
       postgres_geqo_seed:
-        type: int
+        type: str
         required: false
         default: '0.0'
         description: 'Match PostgreSQL `geqo_seed` option'
 
 ## Postgres Other planner options
       postgres_default_statistics_target:
-        type: int
+        type: str
         required: false
         default: '100'
         description: 'Match PostgreSQL `default_statistics_target` option'
@@ -693,19 +693,19 @@ argument_specs:
         description: 'Match PostgreSQL `constraint_exclusion` option'
 
       postgres_cursor_tuple_fraction:
-        type: int
+        type: str
         required: false
         default: '0.1'
         description: 'Match PostgreSQL `cursor_tuple_fraction` option'
 
       postgres_from_collapse_limit:
-        type: int
+        type: str
         required: false
         default: '8'
         description: 'Match PostgreSQL `from_collapse_limit` option'
 
       postgres_join_collapse_limit:
-        type: int
+        type: str
         required: false
         default: '8'
         description: 'Match PostgreSQL `join_collapse_limit` option'
@@ -717,7 +717,7 @@ argument_specs:
         description: 'Match PostgreSQL `plan_cache_mode` option'
 
       postgres_recursive_worktable_factor:
-        type: int
+        type: str
         required: false
         default: '10.0'
         description: 'Match PostgreSQL `recursive_worktable_factor` option'
@@ -811,31 +811,31 @@ argument_specs:
         description: 'Match PostgreSQL `log_min_error_statement` option'
 
       postgres_log_min_duration_statement:
-        type: int
+        type: str
         required: false
         default: '2000'
         description: 'Match PostgreSQL `log_min_duration_statement` option'
 
       postgres_log_min_duration_sample:
-        type: int
+        type: str
         required: false
         default: '-1'
         description: 'Match PostgreSQL `log_min_duration_sample` option'
 
       postgres_log_statement_sample_rate:
-        type: int
+        type: str
         required: false
         default: '1.0'
         description: 'Match PostgreSQL `log_statement_sample_rate` option'
 
       postgres_log_transaction_sample_rate:
-        type: int
+        type: str
         required: false
         default: '0.0'
         description: 'Match PostgreSQL `log_transaction_sample_rate` option'
 
       postgres_log_startup_progress_interval:
-        type: int
+        type: str
         required: false
         default: '10s'
         description: 'Match PostgreSQL `log_startup_progress_interval` option'
@@ -927,13 +927,13 @@ argument_specs:
         description: 'Match PostgreSQL `log_recovery_conflict_waits` option'
 
       postgres_log_parameter_max_lenght:
-        type: int
+        type: str
         required: false
         default: '-1'
         description: 'Match PostgreSQL `log_parameter_max_lenght` option'
 
       postgres_log_parameter_max_length_on_error:
-        type: int
+        type: str
         required: false
         default: '-1'
         description: 'Match PostgreSQL `log_parameter_max_length_on_error` option'
@@ -945,7 +945,7 @@ argument_specs:
         description: 'Match PostgreSQL `log_statement` option'
 
       postgres_log_temp_files:
-        type: int
+        type: str
         required: false
         default: '-1'
         description: 'Match PostgreSQL `log_temp_files` option'
@@ -972,7 +972,7 @@ argument_specs:
         description: 'Match PostgreSQL `track_activities` option'
 
       postgres_track_activity_query_size:
-        type: int
+        type: str
         required: false
         default: '1024'
         description: 'Match PostgreSQL `track_activity_query_size` option'
@@ -1048,7 +1048,7 @@ argument_specs:
         description: 'Match PostgreSQL `autovacuum` option'
 
       postgres_autovacuum_max_workers:
-        type: int
+        type: str
         required: false
         default: '3'
         description: 'Match PostgreSQL `autovacuum_max_workers` option'
@@ -1060,37 +1060,37 @@ argument_specs:
         description: 'Match PostgreSQL `autovacuum_naptime` option'
 
       postgres_autovacuum_vacuum_threshold:
-        type: int
+        type: str
         required: false
         default: '50'
         description: 'Match PostgreSQL `autovacuum_vacuum_treshold` option'
 
       postgres_autovacuum_analyze_threshold:
-        type: int
+        type: str
         required: false
         default: '50'
         description: 'Match PostgreSQL `autovacuum_analyze_threshold` option'
 
       postgres_autovacuum_vacuum_scale_factor:
-        type: int
+        type: str
         required: false
         default: '0.2'
         description: 'Match PostgreSQL `autovacuum_vacuum_scale_factor` option'
 
       postgres_autovacuum_analyze_scale_factor:
-        type: int
+        type: str
         required: false
         default: '0.1'
         description: 'Match PostgreSQL `autovacuum_analyze_scale_factor` option'
 
       postgres_autovacuum_freeze_max_age:
-        type: int
+        type: str
         required: false
         default: '200000000'
         description: 'Match PostgreSQL `autovacuum_freeze_max_age` option'
 
       postgres_autovacuum_multixact_freeze_max_age:
-        type: int
+        type: str
         required: false
         default: '400000000'
         description: 'Match PostgreSQL `autovacuum_multixact_freeze_max_age` option'
@@ -1102,19 +1102,19 @@ argument_specs:
         description: 'Match PostgreSQL `autovacuum_vacuum_cost_delay` option'
 
       postgres_autovacuum_vacuum_cost_limit:
-        type: int
+        type: str
         required: false
         default: '-1'
         description: 'Match PostgreSQL `autovacuum_vacuum_cost_limit` option'
 
       postgres_autovacuum_vacuum_insert_threshold:
-        type: int
+        type: str
         required: false
         default: '1000'
         description: 'Match PostgreSQL `autovacuum_vacuum_insert_threshold` option'
 
       postgres_autovacuum_vacuum_insert_scale_factor:
-        type: int
+        type: str
         required: false
         default: '0.2'
         description: 'Match PostgreSQL `autovacuum_vacuum_insert_scale_factor` option'
@@ -1153,7 +1153,7 @@ argument_specs:
         description: 'Match PostgreSQL `default_toast_compression` option'
 
       postgres_vacuum_failsafe_age:
-        type: int
+        type: str
         required: false
         default: 1600000000
         description: 'Match PostgreSQL `vacuum_failsafe_age` option'
@@ -1189,55 +1189,55 @@ argument_specs:
         description: 'Match PostgreSQL `session_replication_role` option'
 
       postgres_statement_timeout:
-        type: int
+        type: str
         required: false
         default: '0'
         description: 'Match PostgreSQL `statement_timeout` option'
 
       postgres_lock_timeout:
-        type: int
+        type: str
         required: false
         default: '0'
         description: 'Match PostgreSQL `lock_timeout` option'
 
       postgres_idle_in_transaction_session_timeout:
-        type: int
+        type: str
         required: false
         default: '0'
         description: 'Match PostgreSQL `idle_in_transaction_session_timeout` option'
 
       postgres_idle_session_timeout:
-        type: int
+        type: str
         required: false
         default: '0'
         description: 'Match PostgreSQL `idle_session_timeout` option'
 
       postgres_vacuum_freeze_table_age:
-        type: int
+        type: str
         required: false
         default: '150000000'
         description: 'Match PostgreSQL `vacuum_freeze_table_age` option'
 
       postgres_vacuum_freeze_min_age:
-        type: int
+        type: str
         required: false
         default: '50000000'
         description: 'Match PostgreSQL `vacuum_freeze_min_age` option'
 
       postgres_vacuum_multixact_freeze_table_age:
-        type: int
+        type: str
         required: false
         default: '150000000'
         description: 'Match PostgreSQL `vacuum_multixact_freeze_table_age` option'
 
       postgres_vacuum_multixact_freeze_min_age:
-        type: int
+        type: str
         required: false
         default: '5000000'
         description: 'Match PostgreSQL `vacuum_multixact_freeze_min_age` option'
 
       postgres_vacuum_multixact_failsafe_age:
-        type: int
+        type: str
         required: false
         default: '1600000000'
         description: 'Match PostgreSQL `vacuum_multixact_failsafe_age` option'
@@ -1345,7 +1345,7 @@ argument_specs:
         description: 'Match PostgreSQL `dynamic_library_path` option'
 
       postgres_gin_fuzzy_search_limit:
-        type: int
+        type: str
         required: false
         default: '0'
         description: 'Match PostgreSQL `gin_fuzzy_search_limit` option'
@@ -1359,25 +1359,25 @@ argument_specs:
         description: 'Match PostgreSQL `deadlock_timeout` option'
 
       postgres_max_locks_per_transaction:
-        type: int
+        type: str
         required: false
         default: '64'
         description: 'Match PostgreSQL `max_locks_per_transaction` option'
 
       postgres_max_pred_locks_per_transaction:
-        type: int
+        type: str
         required: false
         default: '64'
         description: 'Match PostgreSQL `max_pred_locks_per_transaction` option'
 
       postgres_max_pred_locks_per_relation:
-        type: int
+        type: str
         required: false
         default: '-2'
         description: 'Match PostgreSQL `max_pred_locks_per_relation` option'
 
       postgres_max_pred_locks_per_page:
-        type: int
+        type: str
         required: false
         default: '2'
         description: 'Match PostgreSQL `max_pred_locks_per_page` option'
