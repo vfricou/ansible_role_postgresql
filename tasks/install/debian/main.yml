@@ -2,6 +2,9 @@
 - name: "Install | Debian | Ensure PGDG repository GPG key is imported in apt keyring"
   become: true
   become_user: 'root'
+  tags:
+    - install
+    - postgres_install
   ansible.builtin.apt_key:
     url: "{{ debian.repo_gpg_url }}"
     keyring: "/etc/apt/trusted.gpg.d/pgdg.gpg"
@@ -10,6 +13,9 @@
 - name: "Install | Debian | Configure PGDG repository"
   become: true
   become_user: 'root'
+  tags:
+    - install
+    - postgres_install
   ansible.builtin.apt_repository:
     filename: "pgdg"
     repo: "{{ debian.repo_config }}"
@@ -20,6 +26,9 @@
 - name: "Install | Debian | Ensure required packages are installed"
   become: true
   become_user: 'root'
+  tags:
+    - install
+    - postgres_install
   ansible.builtin.apt:
     state: present
     name:

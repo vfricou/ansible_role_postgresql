@@ -1,6 +1,9 @@
 ---
 - name: 'Backup | Ensure target folders exists'
   loop: "{{ folders | dict2items }}"
+  tags:
+    - backup
+    - postgres_backup
   vars:
     folders:
       base:
@@ -28,6 +31,9 @@
 - name: 'Backup | Perform backup'
   become: true
   become_user: '{{ postgres.user }}'
+  tags:
+    - backup
+    - postgres_backup
   block:
     - name: 'Backup | List databases'
       register: postgresql_dblist

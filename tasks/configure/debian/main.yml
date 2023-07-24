@@ -4,6 +4,7 @@
   become_user: 'root'
   tags:
     - configure
+    - postgres_configure
   loop:
     - { filename: 'postgresql.conf', owner: '{{ postgres.user }}', group: '{{ postgres.group }}', mode: '0644' }
     - { filename: 'pg_hba.conf',     owner: '{{ postgres.user }}', group: '{{ postgres.group }}', mode: '0640' } # noqa yaml[commas]

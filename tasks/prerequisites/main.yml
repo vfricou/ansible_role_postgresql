@@ -1,4 +1,12 @@
 ---
 - name: "Prerequisites | Import RHEL tasks"
   when: ansible_os_family == 'RedHat'
+  tags:
+    - always
+  ansible.builtin.import_tasks: prerequisites/rhel/main.yml
+
+- name: "Prerequisites | Import Debian tasks"
+  when: ansible_os_family == 'Debian'
+  tags:
+    - always
   ansible.builtin.import_tasks: prerequisites/rhel/main.yml
