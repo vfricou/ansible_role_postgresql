@@ -2,89 +2,27 @@
 
 Install, configure and backup postgresql database engine
 
-**Platforms Supported**:
+## Requirements
 
-| Platform | Versions |
-|----------|----------|
-| EL | 8, 9 |
 
-## ⚠️ Requirements
+### Collections dependencies
+* community.postgresql
+* community.general
 
-Ansible >= 2.10.
+### Role dependencies
+* {'role': 'vfricou.validator'}
 
-### Ansible collections dependencies
 
-  * community.postgresql
-  * community.general
 
-### Ansible role dependencies
-
-  * vfricou.validator
-
-## ⚡ Installation
-
-### Install with Ansible Galaxy requirement file
-
-**requirements.yml** :
-```yaml
----
-roles:
-  - name: vfricou.postgresql
-    src: git@github.com:vfricou/ansible_role_postgresql.git
-    version: master
-    scm: git
-collections:
-  - name: community.postgresql
-  - name: community.general
-```
-
-```shell
-ansible-galaxy role install -r requirements.yml
-ansible-galaxy collection install -r requirements.yml
-```
-
-### Install with git
-
-If you do not want a global installation, clone it into your `roles_path`.
-
-```shell
-git clone git@github.com:vfricou/ansible_role_postgresql.git  vfricou.postgresql
-```
-
-As the role is not managed by Ansible Galaxy, you do not have to specify the
-github user account.
-
-### ✏️ Example Playbook
-
-Basic usage is:
-
-```yaml
-- hosts: all
-  roles:
-    - role: vfricou.postgresql
-      vars:
-        pg_bkp_base_path: /srv/exploit/backup/postgres
-        pg_bkp_conf_target_dir: '{{ pg_bkp_base_path }}/conf'
-        pg_bkp_dump_target_dir: '{{ pg_bkp_base_path }}/dump'
-        postgres_listen_addr: 127.0.0.1
-        postgres_listen_port: '5432'
-        postgres_ssl_enable: true
-        postgres_ssl_prefer_server_ciphers: true
-        postgres_version: '15'
-        
-```
-
-## ⚙️ Role Variables
+## Role Variables
 
 Variables are divided in three types.
 
 The **default vars** section shows you which variables you may
-override in your ansible inventory. As a matter of fact, all variables should
+override in your ansible inventory.
+As a matter of fact, all variables should
 be defined there for explicitness, ease of documentation as well as overall
 role manageability.
-
-The **context variables** are shown in section below hint you
-on how runtime context may affects role execution.
 
 ### Default variables
 
@@ -167,7 +105,7 @@ on how runtime context may affects role execution.
 ```
 
 </td>
-<td> list[dict] </td>
+<td> dict </td>
 <td> Engine ACL deployed in pg_hba.conf file (see #Variable postgres_acl examples) </td>
 </tr>
 <tr>
@@ -364,7 +302,7 @@ prime256v1
 
 </td>
 <td>  </td>
-<td>  </td>
+<td> Specify ECDH curve used for curve TLS protocols </td>
 </tr>
 <tr>
 <td> postgres_ssl_min_vers </td>
@@ -425,7 +363,7 @@ TLSv1.2
 <tr>
 <td> postgres_max_prepared_transactions </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -551,7 +489,7 @@ posix
 <tr>
 <td> postgres_max_files_per_process </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -565,7 +503,7 @@ posix
 <tr>
 <td> postgres_vacuum_cost_delay </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -579,7 +517,7 @@ posix
 <tr>
 <td> postgres_vacuum_cost_page_hit </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -593,7 +531,7 @@ posix
 <tr>
 <td> postgres_vacuum_cost_page_miss </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -607,7 +545,7 @@ posix
 <tr>
 <td> postgres_vacuum_cost_page_dirty </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -621,7 +559,7 @@ posix
 <tr>
 <td> postgres_vacuum_cost_limit </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -649,7 +587,7 @@ posix
 <tr>
 <td> postgres_bgwriter_lru_maxpages </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -691,7 +629,7 @@ posix
 <tr>
 <td> postgres_backend_flush_after </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -705,7 +643,7 @@ posix
 <tr>
 <td> postgres_effective_io_concurrency </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -719,7 +657,7 @@ posix
 <tr>
 <td> postgres_maintenance_io_concurrency </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -733,7 +671,7 @@ posix
 <tr>
 <td> postgres_max_worker_processes </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -747,7 +685,7 @@ posix
 <tr>
 <td> postgres_max_parallel_workers_per_gather </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -761,7 +699,7 @@ posix
 <tr>
 <td> postgres_max_parallel_maintenance_workers </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -775,7 +713,7 @@ posix
 <tr>
 <td> postgres_max_parallel_workers </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -915,7 +853,7 @@ off
 <tr>
 <td> postgres_commit_delay </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -929,7 +867,7 @@ off
 <tr>
 <td> postgres_commit_siblings </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -957,7 +895,7 @@ off
 <tr>
 <td> postgres_checkpoint_completion_target </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1307,7 +1245,7 @@ off
 <tr>
 <td> postgres_seq_page_cost </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1321,7 +1259,7 @@ off
 <tr>
 <td> postgres_random_page_cost </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1335,7 +1273,7 @@ off
 <tr>
 <td> postgres_cpu_tuple_cost </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1349,7 +1287,7 @@ off
 <tr>
 <td> postgres_cpu_index_tuple_cost </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1363,7 +1301,7 @@ off
 <tr>
 <td> postgres_cpu_operator_cost </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1377,7 +1315,7 @@ off
 <tr>
 <td> postgres_parallel_setup_cost </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1391,7 +1329,7 @@ off
 <tr>
 <td> postgres_parallel_tuple_cost </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1447,7 +1385,7 @@ off
 <tr>
 <td> postgres_jit_above_cost </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1461,7 +1399,7 @@ off
 <tr>
 <td> postgres_jit_inline_above_cost </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1475,7 +1413,7 @@ off
 <tr>
 <td> postgres_jit_optimize_above_cost </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1503,7 +1441,7 @@ on
 <tr>
 <td> postgres_geqo_threshold </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1517,7 +1455,7 @@ on
 <tr>
 <td> postgres_geqo_effort </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1531,7 +1469,7 @@ on
 <tr>
 <td> postgres_geqo_pool_size </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1545,7 +1483,7 @@ on
 <tr>
 <td> postgres_geqo_generations </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1559,7 +1497,7 @@ on
 <tr>
 <td> postgres_geqo_selection_bias </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1573,7 +1511,7 @@ on
 <tr>
 <td> postgres_geqo_seed </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1587,7 +1525,7 @@ on
 <tr>
 <td> postgres_default_statistics_target </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1615,7 +1553,7 @@ partition
 <tr>
 <td> postgres_cursor_tuple_fraction </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1629,7 +1567,7 @@ partition
 <tr>
 <td> postgres_from_collapse_limit </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1643,7 +1581,7 @@ partition
 <tr>
 <td> postgres_join_collapse_limit </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1671,7 +1609,7 @@ auto
 <tr>
 <td> postgres_recursive_worktable_factor </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1881,7 +1819,7 @@ error
 <tr>
 <td> postgres_log_min_duration_statement </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1895,7 +1833,7 @@ error
 <tr>
 <td> postgres_log_min_duration_sample </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1909,7 +1847,7 @@ error
 <tr>
 <td> postgres_log_statement_sample_rate </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1923,7 +1861,7 @@ error
 <tr>
 <td> postgres_log_transaction_sample_rate </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -1937,7 +1875,7 @@ error
 <tr>
 <td> postgres_log_startup_progress_interval </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2147,7 +2085,7 @@ on
 <tr>
 <td> postgres_log_parameter_max_lenght </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2161,7 +2099,7 @@ on
 <tr>
 <td> postgres_log_parameter_max_length_on_error </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2189,7 +2127,7 @@ none
 <tr>
 <td> postgres_log_temp_files </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2221,7 +2159,7 @@ none
 <td>
 
 ```yaml
-
+on
 ```
 
 </td>
@@ -2245,7 +2183,7 @@ on
 <tr>
 <td> postgres_track_activity_query_size </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2413,7 +2351,7 @@ on
 <tr>
 <td> postgres_autovacuum_max_workers </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2441,7 +2379,7 @@ on
 <tr>
 <td> postgres_autovacuum_vacuum_threshold </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2455,7 +2393,7 @@ on
 <tr>
 <td> postgres_autovacuum_analyze_threshold </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2469,7 +2407,7 @@ on
 <tr>
 <td> postgres_autovacuum_vacuum_scale_factor </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2483,7 +2421,7 @@ on
 <tr>
 <td> postgres_autovacuum_analyze_scale_factor </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2497,7 +2435,7 @@ on
 <tr>
 <td> postgres_autovacuum_freeze_max_age </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2511,7 +2449,7 @@ on
 <tr>
 <td> postgres_autovacuum_multixact_freeze_max_age </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2539,7 +2477,7 @@ on
 <tr>
 <td> postgres_autovacuum_vacuum_cost_limit </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2553,7 +2491,7 @@ on
 <tr>
 <td> postgres_autovacuum_vacuum_insert_threshold </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2567,7 +2505,7 @@ on
 <tr>
 <td> postgres_autovacuum_vacuum_insert_scale_factor </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2651,7 +2589,7 @@ pglz
 <tr>
 <td> postgres_vacuum_failsafe_age </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2735,7 +2673,7 @@ origin
 <tr>
 <td> postgres_statement_timeout </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2749,7 +2687,7 @@ origin
 <tr>
 <td> postgres_lock_timeout </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2763,7 +2701,7 @@ origin
 <tr>
 <td> postgres_idle_in_transaction_session_timeout </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2777,7 +2715,7 @@ origin
 <tr>
 <td> postgres_idle_session_timeout </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2791,7 +2729,7 @@ origin
 <tr>
 <td> postgres_vacuum_freeze_table_age </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2805,7 +2743,7 @@ origin
 <tr>
 <td> postgres_vacuum_freeze_min_age </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2819,7 +2757,7 @@ origin
 <tr>
 <td> postgres_vacuum_multixact_freeze_table_age </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2833,7 +2771,7 @@ origin
 <tr>
 <td> postgres_vacuum_multixact_freeze_min_age </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -2847,7 +2785,7 @@ origin
 <tr>
 <td> postgres_vacuum_multixact_failsafe_age </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -3085,7 +3023,7 @@ $libdir
 <tr>
 <td> postgres_gin_fuzzy_search_limit </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -3113,7 +3051,7 @@ $libdir
 <tr>
 <td> postgres_max_locks_per_transaction </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -3127,7 +3065,7 @@ $libdir
 <tr>
 <td> postgres_max_pred_locks_per_transaction </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -3141,7 +3079,7 @@ $libdir
 <tr>
 <td> postgres_max_pred_locks_per_relation </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -3155,7 +3093,7 @@ $libdir
 <tr>
 <td> postgres_max_pred_locks_per_page </td>
 <td> False </td>
-<td> int </td>
+<td> str </td>
 <td>
 
 ```yaml
@@ -3336,115 +3274,13 @@ fsync
 </tr>
 </table>
 
-### Context variables
-
-Those variables from `vars/*.{yml,json}` are loaded dynamically during task
-runtime using the `include_vars` module.
-
-Variables loaded from `vars/main.yml`.
-
-<table>
-<tr>
-<th> Variable Name </th>
-<th> Value </th>
-</tr>
-<tr>
-<td> supported_platforms </td>
-<td>
-
-```yaml
-- name: Rocky
-  versions:
-  - 8
-  - 9
-- name: AlmaLinux
-  versions:
-  - 8
-  - 9
-- name: RedHat
-  versions:
-  - 8
-  - 9
-- name: Debian
-  versions:
-  - 11
-  - 12
-
-```
-
-</td>
-<tr>
-<td> packages </td>
-<td>
-
-```yaml
-debian:
-  requirements:
-  - apt-transport-https
-  - python3-psycopg
-rhel:
-  requirements:
-  - python3-psycopg2
-
-```
-
-</td>
-<tr>
-<td> debian </td>
-<td>
-
-```yaml
-repo_config: deb https://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release
-  }}-pgdg main
-repo_gpg_url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
-
-```
-
-</td>
-<tr>
-<td> postgres </td>
-<td>
-
-```yaml
-debian:
-  conf_path: /etc/postgresql
-group: postgres
-user: postgres
-
-```
-
-</td>
-</table>
 
 
-
-### Role Requirements File
-
-Additionnals roles requirements
-```yaml
----
-roles:
-  - name: vfricou.validator
-    src: git+https://github.com/vfricou/ansible_role_validator.git
-    version: master
-    scm: git
-```
-
-
-## Additional documentations
-#### Variable postgres_acl examples
-
-Example to populate `pg_hba.conf` acls :
-```yaml
-postgres_acl:
-  - database: toto
-    type: host
-    user: toto
-    address: '1.2.3.4/32'
-    method: 'scram-sha-256'
-```
-
-
+## Additionnal documentations
 
 ## Author Information
 
+Vincent Fricou ()
+
+# Licence
+MIT

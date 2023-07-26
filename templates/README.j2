@@ -2,120 +2,59 @@
 
 {{role_meta_vars['galaxy_info']['description']}}
 
-**Platforms Supported**:
-
-{% if role_meta_vars['galaxy_info']['platforms'] is defined and role_meta_vars['galaxy_info']['platforms']|length() %}
-| Platform | Versions |
-|----------|----------|
-  {% for platform in role_meta_vars['galaxy_info']['platforms'] %}
-| {{ platform['name'] }} | {{  platform['versions']|join(', ') }} |
-  {% endfor %}
-{% else %}
-None.
-{% endif %}
-
-## ⚠️ Requirements
-
-Ansible >= {{role_meta_vars['galaxy_info']['min_ansible_version']}}.
-
-### Ansible collections dependencies
+## Requirements
 
 {% if role_meta_vars['collections'] is defined and role_meta_vars['collections']|length() %}
-  {% for collection in role_meta_vars['collections'] %}
-  * {{ collection }}
-  {% endfor %}
+
+### Collections dependencies
+    {% for collection in role_meta_vars['collections'] %}
+* {{ collection }}
+	{% endfor %}
 {% else %}
 None
 {% endif %}
-
-### Ansible role dependencies
-
 {% if role_meta_vars['dependencies'] is defined and role_meta_vars['dependencies']|length() %}
-  {% for dependencie in role_meta_vars['dependencies'] %}
-  * {{ dependencie }}
-  {% endfor %}
-{% else %}
-None.
+
+### Role dependencies
+	{% for dependencie in role_meta_vars['dependencies'] %}
+* {{ dependencie }}
+	{% endfor %}
 {% endif %}
 
-## ⚡ Installation
-
-### Install with Ansible Galaxy requirement file
-
-**requirements.yml** :
-```yaml
----
-roles:
-  - name: {{ rolename }}
-    src: {{ repourl }}
-    version: master
-    scm: git
-{% if role_meta_vars['collections'] is defined and role_meta_vars['collections']|length() %}
-collections:
-  {% for collection in role_meta_vars['collections'] %}
-  - name: {{ collection }}
-  {% endfor %}
+{% if role_docs_md_files is not none %}
+	{% for role_docs_md_file in role_docs_md_files %}
+		{% if 'USAGE' in role_docs_md_file['filename'] %}
+## Usage
+{{ role_docs_md_file['content'] }}
+		{% endif %}
+	{% endfor %}
 {% endif %}
-```
 
-```shell
-ansible-galaxy role install -r requirements.yml
-ansible-galaxy collection install -r requirements.yml
-```
-
-### Install with git
-
-If you do not want a global installation, clone it into your `roles_path`.
-
-```shell
-git clone {{ repourl }}  {{ rolename }}
-```
-
-As the role is not managed by Ansible Galaxy, you do not have to specify the
-github user account.
-
-### ✏️ Example Playbook
-
-Basic usage is:
-
-```yaml
-- hosts: all
-  roles:
-    - role: {{rolename}}
-{% if role_defaults_files |length > 0 and role_defaults_files[0]['content'] is not none %}
-      vars:
-  {% for string_role_defaults_file in string_role_defaults_files %}
-        {{ string_role_defaults_file['content'] | replace ('\n', '\n        ') }}
-  {% endfor %}
-{% endif %}
-```
 
 {# role vars #}
 {% if role_vars_files is not none or role_defaults_files is not none or role_spec_vars is not none %}
-## ⚙️ Role Variables
+## Role Variables
 
 Variables are divided in three types.
 
 The **default vars** section shows you which variables you may
-override in your ansible inventory. As a matter of fact, all variables should
+override in your ansible inventory.
+As a matter of fact, all variables should
 be defined there for explicitness, ease of documentation as well as overall
 role manageability.
 
-The **context variables** are shown in section below hint you
-on how runtime context may affects role execution.
-
-  {% if role_defaults_files is not none or role_spec_vars is not none %}
+	{% if role_defaults_files is not none or role_spec_vars is not none %}
 ### Default variables
-    {% if role_spec_vars is not none %}
-      {% for name,specs in role_spec_vars.items() %}
+		{% if role_spec_vars is not none %}
+			{% for name,specs in role_spec_vars.items() %}
 
 #### {{ name }}
 
-      {% if 'short_description' in specs %}
+				{% if 'short_description' in specs %}
 {{ specs['short_description'] }}
-      {% elif 'description' in specs %}
+				{% elif 'description' in specs %}
 {{ specs['description'] }}
-      {% endif %}
+				{% endif %}
 
 <table>
 <tr>
@@ -126,7 +65,7 @@ on how runtime context may affects role execution.
 <th> Elements </td>
 <th> Description </td>
 </tr>
-        {% for name,option in specs['options'].items() %}
+				{% for name,option in specs['options'].items() %}
 <tr>
 <td> {{ name }} </td>
 <td> {{ option['required'] if 'required' in option else False }} </td>
@@ -141,20 +80,20 @@ on how runtime context may affects role execution.
 <td> {{ option['elements'] if 'elements' in option }} </td>
 <td> {{ option['description'] if 'description' in option }} </td>
 </tr>
-        {% endfor %}
+				{% endfor %}
 </table>
-      {% endfor %}
-    {% else %}
-      {% for role_defaults_file in role_defaults_files %}
+			{% endfor %}
+		{% else %}
+			{% for role_defaults_file in role_defaults_files %}
 Role default variables from `defaults/{{role_defaults_file['filename']}}`.
 
-        {% if role_defaults_file['content'] != None %}
+				{% if role_defaults_file['content'] != None %}
 <table>
 <tr>
 <th> Variable Name </td>
 <th> Value </td>
 </tr>
-          {% for key,value in role_defaults_file['content'].items() %}
+					{% for key,value in role_defaults_file['content'].items() %}
 <tr>
 <td> {{ key }} </td>
 <td>
@@ -165,77 +104,50 @@ Role default variables from `defaults/{{role_defaults_file['filename']}}`.
 
 </td>
 </tr>
-          {% endfor %}
-        {% endif %}
+					{% endfor %}
+				{% endif %}
 </table>
-      {% endfor %}
-    {% endif %}
-  {% endif %}
-
-### Context variables
-
-{% if role_vars_files != [] %}
-Those variables from `vars/*.{yml,json}` are loaded dynamically during task
-runtime using the `include_vars` module.
-  {% for role_vars_file in role_vars_files %}
-
-Variables loaded from `vars/{{role_vars_file['filename']}}`.
-
-    {% if role_vars_file['content'] != None %}
-<table>
-<tr>
-<th> Variable Name </th>
-<th> Value </th>
-</tr>
-      {% for key,value in role_vars_file['content'].items() %}
-<tr>
-<td> {{ key }} </td>
-<td>
-
-```yaml
-{{ value | safe }}
-```
-
-</td>
-      {% endfor %}
-    {% endif %}
-  {% endfor %}
-  {% else %}
-None.
-  {% endif %}
-</table>
+			{% endfor %}
+		{% endif %}
+	{% endif %}
 {% endif %}
 
-
-{% if role_meta_vars['galaxy_info']['license'] is defined %}
-
-{# requirements guide from md files #}
-  {% if role_docs_md_files is not none %}
-    {% for role_docs_md_file in role_docs_md_files %}
-      {% if 'REQUIREMENTS' in role_docs_md_file['filename'] %}
+{% if role_docs_md_files is not none %}
+	{% for role_docs_md_file in role_docs_md_files %}
+		{% if 'SPECIAL_VARIABLES' in role_docs_md_file['filename'] %}
+### Special variables
 {{role_docs_md_file['content']}}
-      {% endif %}
-      {% if loop.length > 1 %}
-      {% endif %}
-    {% endfor %}
-  {% endif %}
+		{% endif %}
+		{% if loop.length > 1 %}
+		{% endif %}
+	{% endfor %}
+{% endif %}
 
-{# usage guide // doc from md files #}
-## Additional documentations
-  {% if role_docs_md_files is not none %}
-    {% for role_docs_md_file in role_docs_md_files %}
-      {% if 'README' not in role_docs_md_file['filename'] %}
-        {% if 'REQUIREMENTS' not in role_docs_md_file['filename'] %}
+{% if role_docs_md_files is not none %}
+	{% for role_docs_md_file in role_docs_md_files %}
+		{% if 'PLAYBOOK' in role_docs_md_file['filename'] %}
+## Example Playbook
+{{ role_docs_md_file['content'] }}
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
+{% if role_docs_md_files is not none %}
+## Additionnal documentations
+	{% for role_docs_md_file in role_docs_md_files %}
+		{% if 'README' not in role_docs_md_file['filename'] and 'PLAYBOOK' not in role_docs_md_file['filename'] and 'SPECIAL_VARIABLES' not in role_docs_md_file['filename'] and 'USAGE' in role_docs_md_file['filename'] %}
 {{role_docs_md_file['content']}}
-        {% endif %}
-      {% endif %}
-      {% if loop.length > 1 %}
-      {% endif %}
-    {% endfor %}
-  {% endif %}
-
+		{% endif %}
+		{% if loop.length > 1 %}
+		{% endif %}
+	{% endfor %}
 {% endif %}
 
 ## Author Information
 
-{{ role_meta_vars['galaxy_info']['company'] }}
+{{ role_meta_vars['galaxy_info']['author'] }} ({{ role_meta_vars['galaxy_info']['company'] }})
+
+{% if role_meta_vars['galaxy_info']['license'] is defined %}
+# Licence
+{{ role_meta_vars['galaxy_info']['license'] }}
+{% endif %}
